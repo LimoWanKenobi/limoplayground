@@ -1,0 +1,11 @@
+{
+  "name": "conf-video-list",
+  "version": "0.0.1",
+  "description": "conferences video lists idea",
+  "author": "limowankenobi",
+  "license": "MIT",
+  "scripts": {
+
+    },
+  "private": true  
+}
