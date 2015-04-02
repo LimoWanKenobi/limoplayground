@@ -1,0 +1,7 @@
+<zippy title='Name Tag'>
+  <name-tag [name]="inputName"></name-tag>
+</zippy>
+
+<zippy title="Update Name">
+  <label for="my_name">My Name<label> <input id="my_name" type="text" [value]="inputName" #my-name (keyup)="updateName(myName.value)">
+</zippy>

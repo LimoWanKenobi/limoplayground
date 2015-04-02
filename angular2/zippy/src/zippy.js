@@ -3,7 +3,7 @@ import {Component, Template} from 'angular2/angular2';
 @Component({
   selector: 'zippy',
   bind: {
-    'title_prop': 'title_attr'
+    'title': 'title'
   }
 })
 @Template({
