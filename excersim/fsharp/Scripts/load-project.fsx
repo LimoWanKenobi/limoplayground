@@ -3,3 +3,5 @@
 #load @"load-references.fsx"
 #load @"..\example\Example.fs"
       @"..\example\ExampleTest.fs"
+      @"..\sum-of-multiples\SumOfMultiples.fs"
+      @"..\sum-of-multiples\SumOfMultiplesTest.fs"

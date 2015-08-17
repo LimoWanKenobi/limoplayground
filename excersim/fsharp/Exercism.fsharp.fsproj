@@ -54,6 +54,9 @@
     <Compile Include="example\ExampleTest.fs" />
     <None Include="Scripts\load-references.fsx" />
     <None Include="Scripts\load-project.fsx" />
+    <Compile Include="sum-of-multiples\SumOfMultiples.fs" />
+    <Compile Include="sum-of-multiples\SumOfMultiplesTest.fs" />
+    <None Include="sum-of-multiples\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

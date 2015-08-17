@@ -1,4 +1,4 @@
-﻿module SumOfMultiplesTest
+﻿module ExamplesTest
 
 open NUnit.Framework
 open Example

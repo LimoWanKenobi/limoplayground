@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="example\Example.cs" />
     <Compile Include="example\ExampleTests.cs" />
+    <Compile Include="leap\Leap.cs" />
     <Compile Include="leap\LeapTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
