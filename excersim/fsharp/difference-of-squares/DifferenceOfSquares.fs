@@ -1,6 +1,6 @@
 ﻿module DifferenceOfSquares
 
-type DifferenceOfSquares(x) =
+type DifferenceOfSquares(num: int) =
     member x.squareOfSums() =
         0
 

@@ -50,10 +50,9 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Content Include="packages.config" />
-    <Compile Include="example\Example.fs" />
-    <Compile Include="example\ExampleTest.fs" />
-    <None Include="Scripts\load-references.fsx" />
-    <None Include="Scripts\load-project.fsx" />
+    <Compile Include="difference-of-squares\DifferenceOfSquares.fs" />
+    <Compile Include="difference-of-squares\DifferenceOfSquaresTest.fs" />
+    <None Include="difference-of-squares\README.md" />
     <Compile Include="sum-of-multiples\SumOfMultiples.fs" />
     <Compile Include="sum-of-multiples\SumOfMultiplesTest.fs" />
     <None Include="sum-of-multiples\README.md" />
