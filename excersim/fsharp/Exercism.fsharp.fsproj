@@ -50,12 +50,15 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="difference-of-squares\README.md" />
     <Compile Include="difference-of-squares\DifferenceOfSquares.fs" />
     <Compile Include="difference-of-squares\DifferenceOfSquaresTest.fs" />
-    <None Include="difference-of-squares\README.md" />
+    <None Include="bob\README.md" />
+    <Compile Include="bob\Bob.fs" />
+    <Compile Include="bob\BobTest.fs" />
+    <None Include="sum-of-multiples\README.md" />
     <Compile Include="sum-of-multiples\SumOfMultiples.fs" />
     <Compile Include="sum-of-multiples\SumOfMultiplesTest.fs" />
-    <None Include="sum-of-multiples\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
