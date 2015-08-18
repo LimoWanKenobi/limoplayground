@@ -1,6 +1,6 @@
 ﻿module DifferenceOfSquares
 
-type DifferenceOfSquares(num: int) =
+type DifferenceOfSquares(num) =
     let square x = x * x
 
     member this.squareOfSums() =
@@ -8,11 +8,9 @@ type DifferenceOfSquares(num: int) =
         |> List.sum
         |> square
         
-
     member this.sumOfSquares() =
         [1 .. num]
-        |> List.map square
-        |> List.sum
+        |> List.sumBy square
 
     member this.difference() =
         this.squareOfSums() - this.sumOfSquares()
