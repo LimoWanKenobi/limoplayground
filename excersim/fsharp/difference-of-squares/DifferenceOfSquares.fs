@@ -1,16 +1,26 @@
 ﻿module DifferenceOfSquares
 
 type DifferenceOfSquares(num) =
-    let square x = x * x
+    let square x = pown x 2
 
-    member this.squareOfSums() =
-        [1 .. num] 
+    let numbers = [1 .. num]
+
+    let sqrSums = 
+        numbers
         |> List.sum
         |> square
-        
-    member this.sumOfSquares() =
-        [1 .. num]
+
+    let sumSqrs = 
+        numbers
         |> List.sumBy square
 
-    member this.difference() =
-        this.squareOfSums() - this.sumOfSquares()
+    let diff = sqrSums - sumSqrs
+
+    member this.squareOfSums() =
+        sqrSums
+        
+    member this.sumOfSquares() =
+        sumSqrs
+
+    member this.difference() = 
+        diff
