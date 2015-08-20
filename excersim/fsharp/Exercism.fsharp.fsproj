@@ -59,6 +59,9 @@
     <None Include="sum-of-multiples\README.md" />
     <Compile Include="sum-of-multiples\SumOfMultiples.fs" />
     <Compile Include="sum-of-multiples\SumOfMultiplesTest.fs" />
+    <None Include="space-age\README.md" />
+    <Compile Include="space-age\SpaceAge.fs" />
+    <Compile Include="space-age\SpaceAgeTest.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
