@@ -3,21 +3,22 @@
 type SpaceAge(seconds: decimal) =
 
     let earthDaySeconds = 24m * 60m * 60m
+    let daysInEarthOrbitalYear = 365.25m
+
+    let mercuryOrbitalPeriod =  0.2408467m
+    let venusyOrbitalPeriod =  0.61519726m
+    let earthOrbitalPeriod = 1m
+    let marsOrbitalPeriod =  1.8808158m
+    let jupiterOrbitalPeriod =  11.862615m
+    let saturnOrbitalPeriod =  29.447498m
+    let uranusOrbitalPeriod =  84.016846m
+    let neptuneOrbitalPeriod =  164.79132m
 
     let calculateYears orbitalPeriod =
-        let obitalPeriodInSeconds = orbitalPeriod * earthDaySeconds
+        let obitalPeriodInSeconds = orbitalPeriod * earthDaySeconds * daysInEarthOrbitalYear
         let years = seconds / obitalPeriodInSeconds
         System.Math.Round(years, 2)
 
-    let mercuryOrbitalPeriod =  0.2408467m
-    let venusyOrbitalPeriod =  0.2408467m
-    let earthOrbitalPeriod = 365.25m
-    let marsOrbitalPeriod =  0.2408467m
-    let jupiterOrbitalPeriod =  0.2408467m
-    let saturnOrbitalPeriod =  0.2408467m
-    let uranusOrbitalPeriod =  0.2408467m
-    let neptuneOrbitalPeriod =  0.2408467m
- 
     member this.Seconds = seconds
 
     member this.onMercury = calculateYears mercuryOrbitalPeriod
