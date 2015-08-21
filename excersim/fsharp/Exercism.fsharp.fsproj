@@ -62,6 +62,9 @@
     <None Include="space-age\README.md" />
     <Compile Include="space-age\SpaceAge.fs" />
     <Compile Include="space-age\SpaceAgeTest.fs" />
+    <None Include="gigasecond\README.md" />
+    <Compile Include="gigasecond\GigaSecond.fs" />
+    <Compile Include="gigasecond\GigasecondTest.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
