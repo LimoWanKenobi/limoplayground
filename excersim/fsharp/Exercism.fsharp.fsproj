@@ -65,6 +65,9 @@
     <None Include="gigasecond\README.md" />
     <Compile Include="gigasecond\GigaSecond.fs" />
     <Compile Include="gigasecond\GigasecondTest.fs" />
+    <None Include="triangle\README.md" />
+    <Compile Include="triangle\Triangle.fs" />
+    <Compile Include="triangle\TriangleTest.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
