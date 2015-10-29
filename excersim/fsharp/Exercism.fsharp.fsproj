@@ -68,6 +68,9 @@
     <None Include="triangle\README.md" />
     <Compile Include="triangle\Triangle.fs" />
     <Compile Include="triangle\TriangleTest.fs" />
+    <None Include="beer-song\README.md" />
+    <Compile Include="beer-song\BeerSong.fs" />
+    <Compile Include="beer-song\BeerSongTest.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
