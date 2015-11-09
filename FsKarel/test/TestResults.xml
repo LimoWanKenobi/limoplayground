@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\hernaned\Documents\GitHub\limoplayground\FsKarel\test\FsKarel.Test.Core.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-11-09" time="17:17:04">
+  <environment nunit-version="2.6.4.14350" clr-version="2.0.50727.5485" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Users\hernaned\Documents\GitHub\limoplayground\FsKarel" machine-name="UB1868-5835" user="hernaned" user-domain="UNVIENNA" />
+  <culture-info current-culture="en-GB" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="C:\Users\hernaned\Documents\GitHub\limoplayground\FsKarel\test\FsKarel.Test.Core.dll" executed="True" result="Success" success="True" time="0.037" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="FsKarel" executed="True" result="Success" success="True" time="0.030" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Core" executed="True" result="Success" success="True" time="0.030" asserts="0">
+            <results>
+              <test-suite type="TestFixture" name="Tests" executed="True" result="Success" success="True" time="0.029" asserts="0">
+                <results>
+                  <test-case name="FsKarel.Core.Tests.Everything seems to be correctly configured" executed="True" result="Success" success="True" time="0.022" asserts="1" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
