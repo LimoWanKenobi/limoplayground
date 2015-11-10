@@ -1,7 +1,16 @@
 namespace FsKarel.Core
 
-type KarelWorld = {
-    k_x: int;
-    k_y: int
-} with
-    member this.add() = this.k_x + this.k_y
+type Position = int * int
+
+type Orientation =
+    | North
+    | South
+    | East
+    | West
+    
+type Karel = { position: Position; orientation: Orientation; beepersInBag: int  }
+
+type KarelWorld = { karel: Karel } with
+    member this.add() =
+        let x,y = this.karel.position 
+        x + y
