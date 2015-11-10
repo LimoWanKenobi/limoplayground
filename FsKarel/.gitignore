@@ -177,3 +177,4 @@ testCaseCollection.xml
 
 #FAKE generated files
 .fake/
+test
