@@ -178,3 +178,6 @@ testCaseCollection.xml
 #FAKE generated files
 .fake/
 test
+
+#Paket
+.paket/paket.exe
