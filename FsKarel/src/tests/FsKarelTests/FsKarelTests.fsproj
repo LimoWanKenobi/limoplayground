@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests.fs" />
+    <Compile Include="StepTests.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>
   <PropertyGroup>
