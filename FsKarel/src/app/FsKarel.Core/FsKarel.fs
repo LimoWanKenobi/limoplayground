@@ -10,7 +10,7 @@ type Orientation =
     | West
     
 type KarelState = { position: Position; orientation: Orientation; beepersInBag: int  }
-type WorldState = { karel: KarelState }
+type WorldState = { karel: KarelState; dimensions: int * int;  }
 
 (* Actions *)
 type Action = 
@@ -47,12 +47,25 @@ type Execute = Program * WorldState -> ProgramExecution
 
 module Execution =
     module Actions =
-        let todo() = ()
 
-        let step :Step = fun world -> { original = world; result = world }
+        let step :Step = fun world ->
+            let karel = world.karel
+            let x,y = karel.position
+            
+            let newPos = 
+                match karel.orientation with
+                | North -> (x, y+1) 
+                | South -> (x, y-1)
+                | East -> (x+1, y)
+                | West -> (x-1, y)
+                 
+            let newWorld = { world with karel = { karel with position = newPos } }
+               
+            { original = world; result = newWorld }
         
         
     let execute: Execute = fun (program, world) ->
-       let result = { executedSteps = [ Actions.step world ] }
+       let result = { executedSteps = [] }
+       let error_result = { message = "Not implemented yet"; executedSteps = [] }
        Success result
         
