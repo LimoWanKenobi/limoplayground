@@ -9,8 +9,15 @@ type Orientation =
     | East
     | West
     
-type KarelState = { position: Position; orientation: Orientation; beepersInBag: int  }
-type WorldState = { karel: KarelState; dimensions: int * int;  }
+type KarelState = {
+    position: Position
+    orientation: Orientation
+    beepersInBag: int
+}
+type WorldState = {
+    karel: KarelState
+    dimensions: int * int;  
+}
 
 (* Actions *)
 type Action = 
@@ -20,7 +27,12 @@ type Action =
     | PickBeeper
     | PutBeeper
 
-type ActionResult = { original: WorldState; result: WorldState }
+type Result =
+    | Success
+    | Error of string
+
+type ActionResult = Result * WorldState
+
 type TurnOffResult = ActionResult
 type StepResult = ActionResult
 
@@ -37,11 +49,7 @@ type Function = { name: string; instructions: Block }
 type Program = { main: Function; functions: Function list }
 
 (* Program Execution *)
-type ExecutionError = { message: string; executedSteps: ActionResult list }
-type ExecutionResult = { executedSteps: ActionResult list }
-type ProgramExecution = 
-    | Success of ExecutionResult
-    | Error of ExecutionError
+type ProgramExecution = Result * ActionResult list
     
 type Execute = Program * WorldState -> ProgramExecution
 
@@ -61,11 +69,10 @@ module Execution =
                  
             let newWorld = { world with karel = { karel with position = newPos } }
                
-            { original = world; result = newWorld }
+            (Success, newWorld)
         
         
     let execute: Execute = fun (program, world) ->
-       let result = { executedSteps = [] }
-       let error_result = { message = "Not implemented yet"; executedSteps = [] }
-       Success result
+       let result = (Success, [])
+       result
         
