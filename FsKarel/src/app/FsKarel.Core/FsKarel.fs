@@ -1,5 +1,9 @@
 namespace FsKarel.Core
 
+type Result =
+    | Success
+    | Error of string
+
 (* World *)
 type Position = int * int
 
@@ -27,15 +31,11 @@ type Action =
     | PickBeeper
     | PutBeeper
 
-type Result =
-    | Success
-    | Error of string
-
 type ActionResult = Result * WorldState
-
 type TurnOffResult = ActionResult
 type StepResult = ActionResult
 
+type TurnOff = WorldState -> TurnOffResult
 type Step = WorldState -> StepResult
 
 type ExecuteAction = WorldState -> ActionResult
