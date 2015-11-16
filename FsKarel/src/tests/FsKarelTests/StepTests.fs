@@ -22,9 +22,9 @@ let ``Step should increment x when moving to the east``() =
     }
 
     let result, newWorld = step world
-    
+
     newWorld.karel.position |> should equal (2,2)
-    
+
 [<Test>]
 let ``Step should increment y when moving to the north``() =
     let world = {
@@ -32,9 +32,9 @@ let ``Step should increment y when moving to the north``() =
         dimensions = (10, 10)
     }
     let result, newWorld = step world
-    
+
     newWorld.karel.position |> should equal (1,3)
-    
+
 [<Test>]
 let ``Step should decrement y when moving to the south``() =
     let world = {
@@ -42,9 +42,9 @@ let ``Step should decrement y when moving to the south``() =
         dimensions = (10, 10)
     }
     let result, newWorld = step world
-    
+
     newWorld.karel.position |> should equal (1,1)
-    
+
 [<Test>]
 let ``Step should decrement w when moving to the west``() =
     let world = {
@@ -52,9 +52,9 @@ let ``Step should decrement w when moving to the west``() =
         dimensions = (10, 10)
     }
     let result, newWorld = step world
-    
+
     newWorld.karel.position |> should equal (0,2)
-    
+
 let isError result =
     match result with
     | Error _ -> true
@@ -67,5 +67,5 @@ let ``Step should return an error when trying to step outside of the world``() =
         dimensions = (10, 10)
     }
     let result, newWorld = step world
-    
+
     isError result |> should equal true
