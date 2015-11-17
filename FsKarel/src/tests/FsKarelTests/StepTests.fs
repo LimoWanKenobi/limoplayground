@@ -111,3 +111,12 @@ let ``turnLeft tests``() =
   let world = assertTurnLeft world East
   let world = assertTurnLeft world North
   assertTurnLeft world West
+
+[<Test>]
+let ``turnoff works``() =
+  let world = World.create (Karel.create (2,2) West 0) (10, 10)
+  let result = turnOff world
+
+  match result with
+  | Success newWorld -> newWorld.karel.isOn |> should be False
+  | Error _ -> fail()

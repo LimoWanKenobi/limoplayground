@@ -24,6 +24,7 @@ type KarelState = {
     position: Position
     orientation: Orientation
     beepersInBag: int
+    isOn: bool
 }
 
 type WorldState = {
@@ -71,6 +72,7 @@ module Karel =
         position = position
         orientation = orientation
         beepersInBag = beepersInBag
+        isOn = true
     }
 
 module World =
@@ -137,6 +139,13 @@ module Execution =
             | East -> North
 
           Success { world with karel = { karel with orientation = newOrient }}
+
+        let turnOff: TurnOff = fun world ->
+          let karel = world.karel
+
+          match karel.isOn with
+          | true -> Success { world with karel = { karel with isOn = false }}
+          | false -> Success world
 
     let execute: Execute = fun (program, world) ->
        let result = Success []
