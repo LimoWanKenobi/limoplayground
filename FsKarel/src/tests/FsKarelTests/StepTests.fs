@@ -5,67 +5,51 @@ open FsUnit
 open FsKarel.Core
 open FsKarel.Core.Execution.Actions
 
-
-let createKarel position orientation =
-    let karel = {
-        position = position
-        orientation = orientation
-        beepersInBag = 0
-    }
-    karel
+let fail() = true |> should be False
+let success() = true |> should be True
 
 [<Test>]
 let ``Step should increment x when moving to the east``() =
-    let world = {
-        karel = createKarel (1,2) East
-        dimensions = (10, 10)
-    }
+    let world = World.create (Karel.create (1,2) East 0) (10, 10)
+    let result = step world
 
-    let result, newWorld = step world
-
-    newWorld.karel.position |> should equal (2,2)
+    match result with
+    | Success newWorld -> newWorld.karel.position |> should equal (2,2)
+    | Error _ -> fail()
 
 [<Test>]
 let ``Step should increment y when moving to the north``() =
-    let world = {
-        karel = createKarel (1,2) North
-        dimensions = (10, 10)
-    }
-    let result, newWorld = step world
+  let world = World.create (Karel.create (1,2) North 0) (10, 10)
+  let result = step world
 
-    newWorld.karel.position |> should equal (1,3)
+  match result with
+  | Success newWorld -> newWorld.karel.position |> should equal (1,3)
+  | Error _ -> fail()
 
 [<Test>]
 let ``Step should decrement y when moving to the south``() =
-    let world = {
-        karel = createKarel (1,2) South
-        dimensions = (10, 10)
-    }
-    let result, newWorld = step world
+  let world = World.create (Karel.create (1,2) South 0) (10, 10)
+  let result = step world
 
-    newWorld.karel.position |> should equal (1,1)
+  match result with
+  | Success newWorld -> newWorld.karel.position |> should equal (1,1)
+  | Error _ -> true |> should be False
 
 [<Test>]
 let ``Step should decrement w when moving to the west``() =
-    let world = {
-        karel = createKarel (1,2) West
-        dimensions = (10, 10)
-    }
-    let result, newWorld = step world
+  let world = World.create (Karel.create (1,2) West 0) (10, 10)
+  let result = step world
 
-    newWorld.karel.position |> should equal (0,2)
+  match result with
+  | Success newWorld -> newWorld.karel.position |> should equal (0,2)
+  | Error _ -> fail()
 
-let isError result =
-    match result with
-    | Error _ -> true
-    | _ -> false
 
 [<Test>]
-let ``Step should return an error when trying to step outside of the world``() =
-    let world = {
-        karel = createKarel (0,2) West
-        dimensions = (10, 10)
-    }
-    let result, newWorld = step world
+let ``Step should return an error when trying to step through a wall``() =
+  let world = World.create (Karel.create (0,2) West 0) (10, 10)
+  let result = step world
 
-    isError result |> should equal true
+  match result with
+  | Success _ -> fail()
+  | Error _ -> success()

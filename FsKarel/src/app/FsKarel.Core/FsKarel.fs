@@ -1,7 +1,7 @@
 namespace FsKarel.Core
 
-type Result =
-    | Success
+type Result<'T> =
+    | Success of 'T
     | Error of string
 
 (* World *)
@@ -12,7 +12,7 @@ type Orientation =
     | South
     | East
     | West
-    
+
 type KarelState = {
     position: Position
     orientation: Orientation
@@ -20,18 +20,19 @@ type KarelState = {
 }
 type WorldState = {
     karel: KarelState
-    dimensions: int * int;  
+    dimensions: int * int;
+    walls: Map<Position, byte>
 }
 
 (* Actions *)
-type Action = 
+type Action =
     | TurnOff
     | Step
     | TurnLeft
     | PickBeeper
     | PutBeeper
 
-type ActionResult = Result * WorldState
+type ActionResult = Result<WorldState>
 type TurnOffResult = ActionResult
 type StepResult = ActionResult
 
@@ -41,7 +42,7 @@ type Step = WorldState -> StepResult
 type ExecuteAction = WorldState -> ActionResult
 
 (* Program *)
-type Instruction = 
+type Instruction =
     | Action
 
 type Block = Instruction list
@@ -49,9 +50,27 @@ type Function = { name: string; instructions: Block }
 type Program = { main: Function; functions: Function list }
 
 (* Program Execution *)
-type ProgramExecution = Result * ActionResult list
-    
+type ProgramExecution = Result<ActionResult list>
+
 type Execute = Program * WorldState -> ProgramExecution
+
+module Karel =
+
+  let create position orientation beepersInBag =
+    {
+        position = position
+        orientation = orientation
+        beepersInBag = beepersInBag
+    }
+
+module World =
+
+  let create karel dimensions =
+    {
+      karel = karel
+      dimensions = dimensions
+      walls = Map.empty
+    }
 
 module Execution =
     module Actions =
@@ -59,20 +78,19 @@ module Execution =
         let step :Step = fun world ->
             let karel = world.karel
             let x,y = karel.position
-            
-            let newPos = 
+
+            let newPos =
                 match karel.orientation with
-                | North -> (x, y+1) 
+                | North -> (x, y+1)
                 | South -> (x, y-1)
                 | East -> (x+1, y)
                 | West -> (x-1, y)
-                 
+
             let newWorld = { world with karel = { karel with position = newPos } }
-               
-            (Success, newWorld)
-        
-        
+
+            Success newWorld
+
+
     let execute: Execute = fun (program, world) ->
-       let result = (Success, [])
+       let result = Success []
        result
-        
