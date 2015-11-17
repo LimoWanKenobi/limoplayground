@@ -43,9 +43,11 @@ type Action =
 type ActionResult = Result<WorldState>
 type TurnOffResult = ActionResult
 type StepResult = ActionResult
+type TurnLeftResult = ActionResult
 
 type TurnOff = WorldState -> TurnOffResult
 type Step = WorldState -> StepResult
+type TurnLeft = WorldState -> TurnLeftResult
 
 type ExecuteAction = WorldState -> ActionResult
 
@@ -123,6 +125,18 @@ module Execution =
                   | West -> (x-1, y)
 
               Success { world with karel = { karel with position = newPos } }
+
+        let turnLeft:TurnLeft = fun world ->
+          let karel = world.karel
+
+          let newOrient =
+            match karel.orientation with
+            | North -> West
+            | West -> South
+            | South -> East
+            | East -> North
+
+          Success { world with karel = { karel with orientation = newOrient }}
 
     let execute: Execute = fun (program, world) ->
        let result = Success []

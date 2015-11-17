@@ -92,3 +92,22 @@ let ``Step should return an error when trying to step through a wall``() =
   match result with
   | Success _ -> fail()
   | Error _ -> success()
+
+let assertTurnLeft world expectedOrientation =
+  world.karel.orientation |> should not' (equal expectedOrientation)
+  let result = turnLeft world
+
+  match result with
+  | Success newWorld ->
+    newWorld.karel.orientation |> should equal expectedOrientation
+    newWorld
+  | Error _ ->
+    fail()
+    world
+
+let ``turnLeft tests``() =
+  let world = World.create (Karel.create (1,2) West 0) (10, 10)
+
+  let world = assertTurnLeft world East
+  let world = assertTurnLeft world North
+  assertTurnLeft world West
