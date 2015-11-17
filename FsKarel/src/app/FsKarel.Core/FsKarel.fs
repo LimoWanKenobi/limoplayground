@@ -13,15 +13,23 @@ type Orientation =
     | East
     | West
 
+type WallPositions =
+  | None  = 0b0000
+  | North = 0b0001
+  | South = 0b0010
+  | East  = 0b0100
+  | West  = 0b1000
+
 type KarelState = {
     position: Position
     orientation: Orientation
     beepersInBag: int
 }
+
 type WorldState = {
     karel: KarelState
     dimensions: int * int;
-    walls: Map<Position, byte>
+    walls: Map<Position, WallPositions>
 }
 
 (* Actions *)
@@ -72,6 +80,24 @@ module World =
       walls = Map.empty
     }
 
+  let addWall position direction (world:WorldState) =
+    let wall =
+      match Map.containsKey position world.walls with
+      | true -> Map.find position world.walls
+      | false -> WallPositions.None
+
+    let newWall = (wall ||| direction)
+
+    { world with walls = Map.add position newWall world.walls }
+
+  let hasWall position direction (world:WorldState) =
+    let wall =
+      match Map.containsKey position world.walls with
+      | true -> Map.find position world.walls
+      | false -> WallPositions.None
+
+    direction = (wall &&& direction)
+
 module Execution =
     module Actions =
 
@@ -79,17 +105,24 @@ module Execution =
             let karel = world.karel
             let x,y = karel.position
 
-            let newPos =
-                match karel.orientation with
-                | North -> (x, y+1)
-                | South -> (x, y-1)
-                | East -> (x+1, y)
-                | West -> (x-1, y)
+            let direction =
+              match karel.orientation with
+              | North -> WallPositions.North
+              | South -> WallPositions.South
+              | East -> WallPositions.East
+              | West -> WallPositions.West
 
-            let newWorld = { world with karel = { karel with position = newPos } }
+            match World.hasWall karel.position direction world with
+            | true -> Error "Karel has tried to go through a wall."
+            | false ->
+              let newPos =
+                  match karel.orientation with
+                  | North -> (x, y+1)
+                  | South -> (x, y-1)
+                  | East -> (x+1, y)
+                  | West -> (x-1, y)
 
-            Success newWorld
-
+              Success { world with karel = { karel with position = newPos } }
 
     let execute: Execute = fun (program, world) ->
        let result = Success []
