@@ -23,7 +23,7 @@ type WallPositions =
 type KarelState = {
     position: Position
     orientation: Orientation
-    beepersInBag: int
+    beepersInBag: uint32
     isOn: bool
 }
 
@@ -31,6 +31,7 @@ type WorldState = {
     karel: KarelState
     dimensions: uint32 * uint32;
     walls: Map<Position, WallPositions>
+    beepers: Map<Position, uint32>
 }
 
 (* Actions *)
@@ -45,10 +46,14 @@ type ActionResult = Result<WorldState>
 type TurnOffResult = ActionResult
 type StepResult = ActionResult
 type TurnLeftResult = ActionResult
+type PickBeeperResult = ActionResult
+type PutBeeperResult = ActionResult
 
 type TurnOff = WorldState -> TurnOffResult
 type Step = WorldState -> StepResult
 type TurnLeft = WorldState -> TurnLeftResult
+type PickBeeper = WorldState -> PickBeeperResult
+type PutBeeper = WorldState -> PutBeeperResult
 
 type ExecuteAction = WorldState -> ActionResult
 
@@ -74,7 +79,10 @@ module Karel =
         beepersInBag = beepersInBag
         isOn = true
     }
-
+    
+  let hasBeepersInBag (karel :KarelState) =
+    false
+    
 module World =
 
   let create karel dimensions =
@@ -82,6 +90,7 @@ module World =
       karel = karel
       dimensions = dimensions
       walls = Map.empty
+      beepers = Map.empty
     }
 
   let addWall position direction (world:WorldState) =
@@ -122,6 +131,24 @@ module World =
     let walls = wallsPosition ||| wallWest ||| wallEast ||| wallSouth ||| wallNorth
 
     direction = (walls &&& direction)
+    
+  let setBeepers position amount (world:WorldState) =
+    world
+    
+  let putBeeper position (world:WorldState) =
+    world
+    
+  let pickBeeper position (world:WorldState) =
+    world
+    
+  let beepersAtPosition position (world:WorldState) = 
+    0u
+    
+  let hasBeepers position (world:WorldState) =
+    false // (beepersAtPosition position world) > 0u
+    
+  let hasKarelBeepersInBag world =
+    false
 
 module Execution =
     module Actions =
@@ -167,6 +194,12 @@ module Execution =
           match karel.isOn with
           | true -> Success { world with karel = { karel with isOn = false }}
           | false -> Success world
+          
+        let putBeeper: PutBeeper = fun world ->
+          Success world
+   
+        let pickBeeper: PickBeeper = fun world ->
+          Success world
 
     let execute: Execute = fun (program, world) ->
        let result = Success []

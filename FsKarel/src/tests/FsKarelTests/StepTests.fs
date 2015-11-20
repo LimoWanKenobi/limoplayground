@@ -11,7 +11,7 @@ let success() = true |> should be True
 // TODO: Improve and split this test and move to its own file
 [<Test>]
 let ``Addition of walls to a world should work``() =
-  let world = World.create (Karel.create (1u ,2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u ,2u) East 0u) (10u, 10u)
 
   world.walls |> should equal Map.empty
 
@@ -32,7 +32,7 @@ let ``Addition of walls to a world should work``() =
 
 [<Test>]
 let ``hasWall should work``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
 
   let pos = (3u, 3u)
   World.hasWall pos WallPositions.North world |> should be False
@@ -42,7 +42,7 @@ let ``hasWall should work``() =
 
 [<Test>]
 let ``The world should have walls in its South border``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   
   // Inner walls
   for i = 1 to 8 do
@@ -54,7 +54,7 @@ let ``The world should have walls in its South border``() =
   
 [<Test>]
 let ``The world should have walls in its West border``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   
   // Inner walls
   for i = 1 to 8 do
@@ -66,7 +66,7 @@ let ``The world should have walls in its West border``() =
     
 [<Test>]
 let ``The world should have walls in its North border``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   
   // Inner walls
   for i = 1 to 8 do
@@ -78,7 +78,7 @@ let ``The world should have walls in its North border``() =
 
 [<Test>]
 let ``The world should have walls in its East border``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   
   // Inner walls
   for i = 1 to 8 do
@@ -90,7 +90,7 @@ let ``The world should have walls in its East border``() =
     
 [<Test>]
 let ``The world should have walls in its (0,0) corner``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   
   // Corners
   World.hasWall (0u, 0u) WallPositions.South world |> should be True
@@ -100,7 +100,7 @@ let ``The world should have walls in its (0,0) corner``() =
   
 [<Test>]
 let ``The world should have walls in its (w,0) corner``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   
   // Corners
   World.hasWall (9u, 0u) WallPositions.South world |> should be True
@@ -110,7 +110,7 @@ let ``The world should have walls in its (w,0) corner``() =
   
 [<Test>]
 let ``The world should have walls in its (0,h) corner``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   
   // Corners
   World.hasWall (0u, 9u) WallPositions.South world |> should be False
@@ -120,7 +120,7 @@ let ``The world should have walls in its (0,h) corner``() =
 
 [<Test>]
 let ``The world should have walls in its (w,h) corner``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   
   // Corners
   World.hasWall (9u, 9u) WallPositions.South world |> should be False
@@ -130,7 +130,7 @@ let ``The world should have walls in its (w,h) corner``() =
 
 [<Test>]
 let ``Step should increment x when moving to the east``() =
-  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) East 0u) (10u, 10u)
   let result = step world
 
   match result with
@@ -139,7 +139,7 @@ let ``Step should increment x when moving to the east``() =
 
 [<Test>]
 let ``Step should increment y when moving to the north``() =
-  let world = World.create (Karel.create (1u, 2u) North 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) North 0u) (10u, 10u)
   let result = step world
 
   match result with
@@ -148,7 +148,7 @@ let ``Step should increment y when moving to the north``() =
 
 [<Test>]
 let ``Step should decrement y when moving to the south``() =
-  let world = World.create (Karel.create (1u, 2u) South 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) South 0u) (10u, 10u)
   let result = step world
 
   match result with
@@ -157,7 +157,7 @@ let ``Step should decrement y when moving to the south``() =
 
 [<Test>]
 let ``Step should decrement w when moving to the west``() =
-  let world = World.create (Karel.create (1u, 2u) West 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) West 0u) (10u, 10u)
   let result = step world
 
   match result with
@@ -167,7 +167,7 @@ let ``Step should decrement w when moving to the west``() =
 [<Test>]
 let ``Step should return an error when trying to step through a wall``() =
   let pos = (2u, 2u)
-  let world = World.create (Karel.create pos West 0) (10u, 10u)
+  let world = World.create (Karel.create pos West 0u) (10u, 10u)
               |> World.addWall pos WallPositions.West
 
   let result = step world
@@ -189,7 +189,7 @@ let assertTurnLeft world expectedOrientation =
     world
 
 let ``turnLeft tests``() =
-  let world = World.create (Karel.create (1u, 2u) West 0) (10u, 10u)
+  let world = World.create (Karel.create (1u, 2u) West 0u) (10u, 10u)
 
   let world = assertTurnLeft world East
   let world = assertTurnLeft world North
@@ -197,7 +197,7 @@ let ``turnLeft tests``() =
 
 [<Test>]
 let ``turnoff works``() =
-  let world = World.create (Karel.create (2u, 2u) West 0) (10u, 10u)
+  let world = World.create (Karel.create (2u, 2u) West 0u) (10u, 10u)
   let result = turnOff world
 
   match result with
