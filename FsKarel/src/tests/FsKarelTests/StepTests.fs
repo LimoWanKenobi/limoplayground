@@ -41,9 +41,92 @@ let ``hasWall should work``() =
   World.hasWall pos WallPositions.North worldWithWalls |> should be True
 
 [<Test>]
-let ``The world should have walls in its border``() =
-  // TODO: the world should have walls in its border
-  1 |> should equal 1
+let ``The world should have walls in its South border``() =
+  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  
+  // Inner walls
+  for i = 1 to 8 do
+    // West wall
+    World.hasWall (uint32 i, 0u) WallPositions.West world  |> should be False 
+    World.hasWall (uint32 i, 0u) WallPositions.South world |> should be True
+    World.hasWall (uint32 i, 0u) WallPositions.East world  |> should be False
+    World.hasWall (uint32 i, 0u) WallPositions.North world |> should be False
+  
+[<Test>]
+let ``The world should have walls in its West border``() =
+  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  
+  // Inner walls
+  for i = 1 to 8 do
+    // South wall
+    World.hasWall (0u, uint32 i) WallPositions.West world  |> should be True 
+    World.hasWall (0u, uint32 i) WallPositions.South world |> should be False
+    World.hasWall (0u, uint32 i) WallPositions.East world  |> should be False
+    World.hasWall (0u, uint32 i) WallPositions.North world |> should be False
+    
+[<Test>]
+let ``The world should have walls in its North border``() =
+  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  
+  // Inner walls
+  for i = 1 to 8 do
+    // East wall
+    World.hasWall (uint32 i, 9u) WallPositions.West world  |> should be False 
+    World.hasWall (uint32 i, 9u) WallPositions.South world |> should be False
+    World.hasWall (uint32 i, 9u) WallPositions.East world  |> should be False
+    World.hasWall (uint32 i, 9u) WallPositions.North world |> should be True
+
+[<Test>]
+let ``The world should have walls in its East border``() =
+  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  
+  // Inner walls
+  for i = 1 to 8 do
+    // North wall
+    World.hasWall (9u, uint32 i) WallPositions.West world  |> should be False 
+    World.hasWall (9u, uint32 i) WallPositions.South world |> should be False
+    World.hasWall (9u, uint32 i) WallPositions.East world  |> should be True
+    World.hasWall (9u, uint32 i) WallPositions.North world |> should be False
+    
+[<Test>]
+let ``The world should have walls in its (0,0) corner``() =
+  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  
+  // Corners
+  World.hasWall (0u, 0u) WallPositions.South world |> should be True
+  World.hasWall (0u, 0u) WallPositions.West world  |> should be True
+  World.hasWall (0u, 0u) WallPositions.East world  |> should be False
+  World.hasWall (0u, 0u) WallPositions.North world |> should be False
+  
+[<Test>]
+let ``The world should have walls in its (w,0) corner``() =
+  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  
+  // Corners
+  World.hasWall (9u, 0u) WallPositions.South world |> should be True
+  World.hasWall (9u, 0u) WallPositions.West world  |> should be False
+  World.hasWall (9u, 0u) WallPositions.East world  |> should be True
+  World.hasWall (9u, 0u) WallPositions.North world |> should be False
+  
+[<Test>]
+let ``The world should have walls in its (0,h) corner``() =
+  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  
+  // Corners
+  World.hasWall (0u, 9u) WallPositions.South world |> should be False
+  World.hasWall (0u, 9u) WallPositions.West world  |> should be True
+  World.hasWall (0u, 9u) WallPositions.East world  |> should be False
+  World.hasWall (0u, 9u) WallPositions.North world |> should be True
+
+[<Test>]
+let ``The world should have walls in its (w,h) corner``() =
+  let world = World.create (Karel.create (1u, 2u) East 0) (10u, 10u)
+  
+  // Corners
+  World.hasWall (9u, 9u) WallPositions.South world |> should be False
+  World.hasWall (9u, 9u) WallPositions.West world  |> should be False
+  World.hasWall (9u, 9u) WallPositions.East world  |> should be True
+  World.hasWall (9u, 9u) WallPositions.North world |> should be True
 
 [<Test>]
 let ``Step should increment x when moving to the east``() =
