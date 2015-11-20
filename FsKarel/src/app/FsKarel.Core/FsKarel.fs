@@ -5,7 +5,7 @@ type Result<'T> =
     | Error of string
 
 (* World *)
-type Position = int * int
+type Position = uint32 * uint32
 
 type Orientation =
     | North
@@ -29,7 +29,7 @@ type KarelState = {
 
 type WorldState = {
     karel: KarelState
-    dimensions: int * int;
+    dimensions: uint32 * uint32;
     walls: Map<Position, WallPositions>
 }
 
@@ -121,10 +121,10 @@ module Execution =
             | false ->
               let newPos =
                   match karel.orientation with
-                  | North -> (x, y+1)
-                  | South -> (x, y-1)
-                  | East -> (x+1, y)
-                  | West -> (x-1, y)
+                  | North -> (x, y + 1u)
+                  | South -> (x, y - 1u)
+                  | East  -> (x + 1u, y)
+                  | West  -> (x - 1u, y)
 
               Success { world with karel = { karel with position = newPos } }
 
