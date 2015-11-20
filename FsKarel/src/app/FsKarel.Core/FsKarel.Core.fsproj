@@ -42,6 +42,9 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core.fs" />
+    <Compile Include="KarelModule.fs" />
+    <Compile Include="WorldModule.fs" />
     <Compile Include="FsKarel.fs" />
   </ItemGroup>
   <PropertyGroup>
