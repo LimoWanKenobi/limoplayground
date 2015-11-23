@@ -13,7 +13,7 @@ module Karel =
   let hasBeepersInBag (karel :KarelState) =
     false
     
-  let setBeepersInBag b (karel :KarelState) =
+  let setBeepersInBag beepers (karel :KarelState) =
     karel
     
   let addBeeperToBag (karel :KarelState) =
@@ -21,6 +21,9 @@ module Karel =
     
   let removeBeeperFromBag (karel :KarelState) : Result<KarelState> =
     Success karel
+  
+  let turnOff (karel :KarelState) =
+    karel
 
   let step (karel :KarelState) = 
     (*let x,y = karel.position
