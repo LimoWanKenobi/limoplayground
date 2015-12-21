@@ -13,6 +13,9 @@ module Karel =
   let hasBeepersInBag (karel :KarelState) =
     false
     
+  let isOn (karel :KarelState) =
+    karel.isOn
+    
   let setBeepersInBag beepers (karel :KarelState) =
     karel
     
@@ -23,7 +26,7 @@ module Karel =
     Success karel
   
   let turnOff (karel :KarelState) =
-    karel
+    if karel.isOn then { karel with isOn = false } else karel
 
   let step (karel :KarelState) = 
     (*let x,y = karel.position

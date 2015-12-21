@@ -58,7 +58,7 @@ let ``Adding beepers to the bag tests``() =
 let ``Removing beepers from the bag tests``() = 
   let karel = Karel.create (0u, 0u) Orientation.South 2u
   
-  match Karel.addBeepremoveBeeperFromBagerToBag karel with
+  match Karel.removeBeeperFromBag karel with
   | Error _ -> fail()
   | Success k ->
     k.beepersInBag |> should equal 1u
@@ -71,9 +71,13 @@ let ``Removing beepers from the bag tests``() =
       | Success k -> fail()
   
 [<Test>]
-let ``turnOff tests``() =
+let ``turnOff should turn off karel``() =
   let karel = Karel.create (0u, 0u) Orientation.South 2u
   
   Karel.isOn karel |> should be True
+  
+  let karel = Karel.turnOff karel
+  
+  Karel.isOn karel |> should be False
   
   
