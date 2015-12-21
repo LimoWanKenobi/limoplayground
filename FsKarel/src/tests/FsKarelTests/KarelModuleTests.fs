@@ -22,7 +22,7 @@ let ``Creation of new karel should work``() =
   
 [<Test>]
 let ``HasBeepersInBag should be false when there are no beepers in bag``() =
-  let karel = Karel.create (0u, 0u) Orientation.South 0u
+  let karel = Karel.Default
   
   Karel.hasBeepersInBag karel |> should be False
   
@@ -34,7 +34,7 @@ let ``HasBeepersInBag should be true when there are beepers in bag``() =
   
 [<Test>]
 let ``SetBeepersInBag should be set the correct value``() =
-  let karel = Karel.create (0u, 0u) Orientation.South 0u
+  let karel = Karel.Default
   
   let beepers = 10u
   let karel = Karel.setBeepersInBag beepers karel
@@ -46,7 +46,7 @@ let ``SetBeepersInBag should be set the correct value``() =
   
 [<Test>]
 let ``Adding beepers to the bag tests``() = 
-  let karel = Karel.create (0u, 0u) Orientation.South 0u
+  let karel = Karel.Default
   
   let karel = Karel.addBeeperToBag karel
   karel.beepersInBag |> should equal 1u
@@ -73,11 +73,9 @@ let ``Removing beepers from the bag tests``() =
 [<Test>]
 let ``turnOff should turn off karel``() =
   let karel = Karel.create (0u, 0u) Orientation.South 2u
-  
   Karel.isOn karel |> should be True
   
   let karel = Karel.turnOff karel
-  
   Karel.isOn karel |> should be False
   
   

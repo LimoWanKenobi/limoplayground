@@ -10,6 +10,8 @@ module Karel =
         isOn = true
     }
     
+  let Default = create (0u, 0u) Orientation.East 0u
+    
   let hasBeepersInBag (karel :KarelState) =
     false
     
@@ -41,4 +43,11 @@ module Karel =
     karel
     
   let turnLeft (karel :KarelState) =
+    (*
+    let newOrient =
+            match karel.orientation with
+            | North -> West
+            | West -> South
+            | South -> East
+            | East -> North*)
     karel
