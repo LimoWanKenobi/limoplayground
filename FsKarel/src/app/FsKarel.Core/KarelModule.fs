@@ -13,7 +13,7 @@ module Karel =
   let Default = create (0u, 0u) Orientation.East 0u
     
   let hasBeepersInBag (karel :KarelState) =
-    false
+    karel.beepersInBag > 0u
     
   let isOn (karel :KarelState) =
     karel.isOn
