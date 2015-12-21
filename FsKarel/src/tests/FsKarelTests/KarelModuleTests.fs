@@ -78,4 +78,45 @@ let ``turnOff should turn off karel``() =
   let karel = Karel.turnOff karel
   Karel.isOn karel |> should be False
   
-  
+let assertTurnLeft karel expectedOrientation =
+  karel.orientation |> should not' (equal expectedOrientation)
+  let result = Karel.turnLeft karel
+  result.orientation |> should equal expectedOrientation
+  result
+    
+[<Test>]
+let ``turnLeft should turn karel to the left``() =
+  let karel = Karel.Default
+
+  let karel = assertTurnLeft karel North
+  let karel = assertTurnLeft karel West
+  let karel = assertTurnLeft karel South
+  ()
+
+[<Test>]
+let ``Step should increment x when moving to the east``() =
+  let karel = Karel.create (1u, 2u) East 0u
+  let result = Karel.step karel
+
+  result.position |> should equal (2u, 2u)
+
+[<Test>]
+let ``Step should increment y when moving to the north``() =
+  let karel = Karel.create (1u, 2u) North 0u
+  let result = Karel.step karel
+
+  result.position |> should equal (1u, 3u)
+
+[<Test>]
+let ``Step should decrement y when moving to the south``() =
+  let karel = Karel.create (1u, 2u) South 0u
+  let result = Karel.step karel
+
+  result.position |> should equal (1u, 1u)
+
+[<Test>]
+let ``Step should decrement w when moving to the west``() =
+  let karel = Karel.create (1u, 2u) West 0u
+  let result = Karel.step karel
+
+  result.position |> should equal (0u, 2u)

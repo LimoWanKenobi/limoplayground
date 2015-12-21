@@ -19,19 +19,21 @@ module Karel =
     karel.isOn
     
   let setBeepersInBag beepers (karel :KarelState) =
-    karel
+    { karel with beepersInBag = beepers }
     
   let addBeeperToBag (karel :KarelState) =
-    karel
+    { karel with beepersInBag = karel.beepersInBag + 1u }
     
   let removeBeeperFromBag (karel :KarelState) : Result<KarelState> =
-    Success karel
+    match karel.beepersInBag with
+    | 0u -> Error "Karel has no beepers in its bag."
+    | _ -> Success { karel with beepersInBag = karel.beepersInBag - 1u }
   
   let turnOff (karel :KarelState) =
     if karel.isOn then { karel with isOn = false } else karel
 
   let step (karel :KarelState) = 
-    (*let x,y = karel.position
+    let x,y = karel.position
     let newPos =
       match karel.orientation with
       | North -> (x, y + 1u)
@@ -39,15 +41,13 @@ module Karel =
       | East  -> (x + 1u, y)
       | West  -> (x - 1u, y)
       
-    { karel with position = newPos }*)
-    karel
+    { karel with position = newPos }
     
   let turnLeft (karel :KarelState) =
-    (*
-    let newOrient =
+    let newOrientation =
             match karel.orientation with
             | North -> West
             | West -> South
             | South -> East
-            | East -> North*)
-    karel
+            | East -> North
+    { karel with orientation = newOrientation }
