@@ -45,6 +45,7 @@
     <Compile Include="Tests.fs" />
     <Compile Include="StepTests.fs" />
     <Compile Include="KarelModuleTests.fs" />
+    <Compile Include="WorldModuleTests.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>
   <PropertyGroup>
