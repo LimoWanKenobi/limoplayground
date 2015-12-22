@@ -46,15 +46,12 @@ let ``Step should decrement w when moving to the west``() =
 
 [<Test>]
 let ``Step should return an error when trying to step through a wall``() =
-  let pos = (2u, 2u)
-  let world = World.create (Karel.create pos West 0u) (10u, 10u)
-              |> World.addWall pos WallPositions.West
-
-  let result = step world
-
-  match result with
-  | Success _ -> fail()
-  | Error _ -> success()
+  match World.addWall (0u, 0u) WallPositions.East World.Default with
+  | Error _ -> fail()
+  | Success world ->
+    match step world with
+    | Success _ -> fail()
+    | Error _ -> success()
 
 let assertTurnLeft world expectedOrientation =
   world.karel.orientation |> should not' (equal expectedOrientation)

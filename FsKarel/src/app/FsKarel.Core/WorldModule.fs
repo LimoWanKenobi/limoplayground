@@ -9,16 +9,23 @@ module World =
       walls = Map.empty
       beepers = Map.empty
     }
-
+    
+  let Default = create Karel.Default (100u, 100u)
+  
   let addWall position direction (world:WorldState) =
-    let wall =
-      match Map.containsKey position world.walls with
-      | true -> Map.find position world.walls
-      | false -> WallPositions.None
+    let addWall' position direction (world:WorldState) =
+      let wall = if Map.containsKey position world.walls
+                    then Map.find position world.walls
+                    else WallPositions.None
 
-    let newWall = (wall ||| direction)
+      let newWall = (wall ||| direction)
 
-    { world with walls = Map.add position newWall world.walls }
+      { world with walls = Map.add position newWall world.walls }
+        
+    let w, h = world.dimensions
+    match position with
+    | x, y when x > w || y > h -> Error "Position of the wall is outside of the world"
+    | _ -> Success (addWall' position direction world)
 
   let hasWall position direction (world:WorldState) =
     let (dw, dh) = world.dimensions
