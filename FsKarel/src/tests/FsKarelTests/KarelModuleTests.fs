@@ -4,8 +4,8 @@ open NUnit.Framework
 open FsUnit
 open FsKarel.Core
 
-let fail() = true |> should be False
-let success() = true |> should be True
+let testFail() = true |> should be False
+let testSuccess() = true |> should be True
 
 [<Test>]
 let ``Creation of new karel should work``() =
@@ -28,7 +28,7 @@ let ``HasBeepersInBag should be false when there are no beepers in bag``() =
   
 [<Test>]
 let ``HasBeepersInBag should be true when there are beepers in bag``() =
-  let karel = Karel.create (0u, 0u) Orientation.South 5u
+  let karel = { Karel.Default with beepersInBag = 5u }
   
   Karel.hasBeepersInBag karel |> should be True
   
@@ -56,23 +56,24 @@ let ``Adding beepers to the bag tests``() =
   
 [<Test>]
 let ``Removing beepers from the bag tests``() = 
-  let karel = Karel.create (0u, 0u) Orientation.South 2u
+  let karel = { Karel.Default with beepersInBag = 2u }
   
-  match Karel.removeBeeperFromBag karel with
-  | Failure _ -> fail()
-  | Success k ->
-    k.beepersInBag |> should equal 1u
-    match Karel.removeBeeperFromBag k with
-    | Failure _ -> fail()
-    | Success k -> 
-      k.beepersInBag |> should equal 0u
-      match Karel.removeBeeperFromBag k with
-      | Failure _ -> success()
-      | Success k -> fail()
+  let assertRemoveBeeper expected karel = 
+    karel.beepersInBag |> should equal expected
+    karel
+    
+  let testFn = Karel.removeBeeperFromBag
+              >> map (assertRemoveBeeper 1u)
+              >> bind Karel.removeBeeperFromBag
+              >> map (assertRemoveBeeper 0u)
+              >> bind Karel.removeBeeperFromBag
+              >> either (fun _ -> testFail()) (fun _ -> testSuccess())
+              
+  testFn karel
   
 [<Test>]
 let ``turnOff should turn off karel``() =
-  let karel = Karel.create (0u, 0u) Orientation.South 2u
+  let karel = Karel.Default
   Karel.isOn karel |> should be True
   
   let karel = Karel.turnOff karel

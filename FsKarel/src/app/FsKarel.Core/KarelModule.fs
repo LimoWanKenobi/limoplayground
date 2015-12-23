@@ -27,10 +27,10 @@ module Karel =
     let removeBeeperFromBag karel =
         match karel.beepersInBag with
         | 0u -> Failure "Karel has no beepers in its bag."
-        | _ -> Success { karel with beepersInBag = karel.beepersInBag - 1u }
+        | bp -> Success { karel with beepersInBag = bp - 1u }
     
     let turnOff karel =
-        if karel.isOn then { karel with isOn = false } else karel
+        { karel with isOn = false }
 
     let step karel = 
         let x,y = karel.position
