@@ -59,15 +59,15 @@ let ``Removing beepers from the bag tests``() =
   let karel = Karel.create (0u, 0u) Orientation.South 2u
   
   match Karel.removeBeeperFromBag karel with
-  | Error _ -> fail()
+  | Failure _ -> fail()
   | Success k ->
     k.beepersInBag |> should equal 1u
     match Karel.removeBeeperFromBag k with
-    | Error _ -> fail()
+    | Failure _ -> fail()
     | Success k -> 
       k.beepersInBag |> should equal 0u
       match Karel.removeBeeperFromBag k with
-      | Error _ -> success()
+      | Failure _ -> success()
       | Success k -> fail()
   
 [<Test>]

@@ -4,7 +4,7 @@ module Execution =
     module Actions =
         let private executeIfKarelIsOn action world =
             match Karel.isOn world.karel with
-            | false -> Error "Karel is Off."
+            | false -> Failure "Karel is Off."
             | true -> action world
             
         let private getDirection karel =
@@ -18,23 +18,23 @@ module Execution =
             let direction = getDirection world.karel
 
             match World.hasWall world.karel.position direction world with
-            | true -> Error "Karel has tried to go through a wall."
+            | true -> Failure "Karel has tried to go through a wall."
             | false -> Success { world with karel = Karel.step world.karel }
     
         let turnOff: TurnOff = fun world ->
-          Success { world with karel = Karel.turnOff world.karel }
+            Success { world with karel = Karel.turnOff world.karel }
  
         let step :Step = fun world ->
             step' world
 
         let turnLeft:TurnLeft = fun world ->
-          Success { world with karel = Karel.turnLeft world.karel}
+            Success { world with karel = Karel.turnLeft world.karel}
          
         let putBeeper: PutBeeper = fun world ->
-          Success world
+            Success world
    
         let pickBeeper: PickBeeper = fun world ->
-          Success world
+            Success world
 
     let execute: Execute = fun (program, world) ->
        let result = Success []

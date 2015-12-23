@@ -15,7 +15,7 @@ let ``Step should increment x when moving to the east``() =
 
   match result with
   | Success newWorld -> newWorld.karel.position |> should equal (2u, 2u)
-  | Error _ -> fail()
+  | Failure _ -> fail()
 
 [<Test>]
 let ``Step should increment y when moving to the north``() =
@@ -24,7 +24,7 @@ let ``Step should increment y when moving to the north``() =
 
   match result with
   | Success newWorld -> newWorld.karel.position |> should equal (1u, 3u)
-  | Error _ -> fail()
+  | Failure _ -> fail()
 
 [<Test>]
 let ``Step should decrement y when moving to the south``() =
@@ -33,7 +33,7 @@ let ``Step should decrement y when moving to the south``() =
 
   match result with
   | Success newWorld -> newWorld.karel.position |> should equal (1u, 1u)
-  | Error _ -> true |> should be False
+  | Failure _ -> true |> should be False
 
 [<Test>]
 let ``Step should decrement w when moving to the west``() =
@@ -42,16 +42,16 @@ let ``Step should decrement w when moving to the west``() =
 
   match result with
   | Success newWorld -> newWorld.karel.position |> should equal (0u, 2u)
-  | Error _ -> fail()
+  | Failure _ -> fail()
 
 [<Test>]
 let ``Step should return an error when trying to step through a wall``() =
-  match World.addWall (0u, 0u) WallPositions.East World.Default with
-  | Error _ -> fail()
+  match World.addWall WallPositions.East (0u, 0u) World.Default with
+  | Failure _ -> fail()
   | Success world ->
     match step world with
     | Success _ -> fail()
-    | Error _ -> success()
+    | Failure _ -> success()
 
 let assertTurnLeft world expectedOrientation =
   world.karel.orientation |> should not' (equal expectedOrientation)
@@ -61,7 +61,7 @@ let assertTurnLeft world expectedOrientation =
   | Success newWorld ->
     newWorld.karel.orientation |> should equal expectedOrientation
     newWorld
-  | Error _ ->
+  | Failure _ ->
     fail()
     world
 
@@ -79,4 +79,4 @@ let ``turnoff works``() =
 
   match result with
   | Success newWorld -> newWorld.karel.isOn |> should be False
-  | Error _ -> fail()
+  | Failure _ -> fail()
