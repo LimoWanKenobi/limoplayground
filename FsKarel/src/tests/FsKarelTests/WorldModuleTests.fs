@@ -4,8 +4,9 @@ open NUnit.Framework
 open FsUnit
 open FsKarel.Core
 
-let testFail() = true |> should be False
-let testSuccess() = true |> should be True
+let testFail a = true |> should be False
+let testSuccess a = true |> should be True
+let assertResult r = either testSuccess testFail
 
 [<Test>]
 let ``Addition of walls to a world should work``() =
@@ -20,28 +21,24 @@ let ``Addition of walls to a world should work``() =
     world
 
   let addWallNorth = (World.addWall WallPositions.North pos)
-  let asserWallNorth = map (assertAddingWalls WallPositions.North)
+  let assertWallNorth = map (assertAddingWalls WallPositions.North)
   let addWallSouth = bind (World.addWall WallPositions.South pos)
   let assertWallsNorthAndSouth = map (assertAddingWalls (WallPositions.North ||| WallPositions.South))
 
-  let testFn = 
-    addWallNorth
-    >> asserWallNorth
-    >> addWallSouth
-    >> assertWallsNorthAndSouth
-    >> ignore
-
-  testFn world
+  world
+    |> addWallNorth
+    |> assertWallNorth
+    |> addWallSouth
+    |> assertWallsNorthAndSouth
+    |> assertResult
+    |> ignore
   
 [<Test>]
 let ``Adding a wall outside of the world should testFail``() =
   let world = World.Default
-  
   let pos = (200u, 200u)
-  let result = World.addWall WallPositions.North pos world
-  match result with 
-  | Failure _ -> testSuccess()
-  | Success _ -> testFail()
+  
+  World.addWall WallPositions.North pos world |> either testFail testSuccess
 
 [<Test>]
 let ``hasWall should work``() =
@@ -134,41 +131,36 @@ let ``The world should have walls in its (w,h) corner``() =
 [<Test>]
 let ``Addition of beepers to a world should work``() =
   let world = World.Default
+  let pos = (3u, 3u)
+  
+  let assertBeepers expected world =
+    Map.containsKey pos world.beepers |> should be True
+    let beepers = Map.find pos world.beepers
+    beepers |> should equal expected
+    world
+  
   world.beepers |> should equal Map.empty
 
-  let pos = (3u, 3u)
-  let result = World.setBeepers 5u pos world
-  match result with
-  | Failure _ -> testFail()
-  | Success worldWithBeepers ->
-    Map.containsKey pos worldWithBeepers.beepers |> should be True
-    let beepers = Map.find pos worldWithBeepers.beepers
-    beepers |> should equal 5u
-
-    let result2 = World.setBeepers 8u pos worldWithBeepers
-
-    match result2 with
-    | Failure _ -> testFail()
-    | Success worldWithBeepers2 ->
-      Map.containsKey pos worldWithBeepers2.beepers |> should be True
-      let beepers = Map.find pos worldWithBeepers2.beepers
-
-      beepers |> should equal 8u
+  world
+    |> World.setBeepers 5u pos
+    |> map (assertBeepers 5u)
+    |> bind (World.setBeepers 8u pos)
+    |> map (assertBeepers 8u)
+    |> assertResult
+    |> ignore
   
 [<Test>]
 let ``Adding a beeper outside of the world should testFail``() =
   let world = World.Default
-  
   let pos = (200u, 200u)
-  let result = World.setBeepers 5u pos world
-  match result with 
-  | Failure _ -> testSuccess()
-  | Success _ -> testFail()
   
+  World.setBeepers 5u pos world |> assertResult |> ignore
+
 [<Test>]
 let ``hasBeeper should work``() =
   let world = World.Default
   let pos = (3u, 3u)
+  
   match World.hasBeepers pos world with 
     | Failure _ -> testFail()
     | Success r -> r |> should be False
