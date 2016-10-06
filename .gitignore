@@ -5,3 +5,4 @@ dist
 bin
 obj
 .DS_Store
+project.lock.json
